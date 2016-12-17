@@ -1,0 +1,24 @@
+{
+  "name": "Cursach(3)",
+  "main": "server.js",
+  "scripts": {
+    "run": "node app.js"
+  },
+  "dependencies": {
+    "ajax-request": "^1.2.1",
+    "bcrypt-nodejs": "latest",
+    "body-parser": "^1.15.2",
+    "connect-flash": "~0.1.1",
+    "cookie-parser": "^1.4.3",
+    "csurf": "^1.9.0",
+    "ejs": "~0.8.5",
+    "express": "^4.14.0",
+    "mongoose": "~4",
+    "morgan": "^1.7.0",
+    "passport": "~0.1.17",
+    "passport-facebook": "~1.0.2",
+    "passport-google-oauth": "~0.1.5",
+    "passport-local": "~0.1.6",
+    "passport-twitter": "~1.0.2"
+  }
+}

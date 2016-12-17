@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+    <title>Ideas</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <style>
+        body {font-family: "Raleway", Arial, sans-serif}
+        .w3-row img{margin-bottom:-8px}
+        h1{
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+</head>
+<body>
+<a href="/" class="w3-right w3-btn w3-red">Home</a>
+<div>
+    <form id="sortf">
+        <p> <input type="text" class="form-control" name="fuser" placeholder="Email"></p>
+        <h4 id="sortedusersbutt" class="btn">Show</h4>
+    </form>
+</div>
+<div class="col-sm-6">
+
+<div class="well">
+
+<h3>All ideas</h3>
+
+<p>
+<ol id = "list">
+    <%for (var i = ideas.length - 1; i >= 0; i--){%>
+    <li class="item">
+        <p>title: <%=ideas[i].title%></p>
+        <p>text: <%=ideas[i].text%></p>
+        <p>author: <%=ideas[i].author%></p>
+        <p><a href='/idea/<%=ideas[i]._id%>'><img alt="picture" style="height:200px; width:300px" src='data:image/jpg;base64,<%= ideas[i].picture %>'/></a></p>
+    </li>
+    <%}%>
+</ol>
+</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</body>
+<script>
+    $(document).ready(function(){
+        $( "#sortedusersbutt" ).click(function() {
+
+            var params = $('#sortf').serialize();
+            console.log(params);
+            var xhr;
+            if(params != 'fuser='){
+                xhr = new XMLHttpRequest();
+                xhr.open("GET", '/getsortedusers?' + params, true);
+            }
+            else{
+                xhr = new XMLHttpRequest();
+                xhr.open("GET", '/getallusers', true);
+            }
+            xhr.send();
+            xhr.onreadystatechange = function() {
+
+                if (xhr.readyState != 4) return;
+
+                if (xhr.status != 200) {
+                    console.log("ERROR: " + xhr.status + ': ' + xhr.statusText);
+                } else if(xhr.responseText.length > 0 && xhr.readyState === XMLHttpRequest.DONE) {
+                    console.log("SUCCESS");
+                    var data = xhr.responseText;
+                    var usersArr = JSON.parse(data);
+
+                    $('#list .item').remove();
+
+                    //var i = 0;
+
+                    console.log(usersArr);
+
+                    for (var i in usersArr){
+
+                        $('#list').append(
+                                '<li class="item">' +
+                                '<a href="/idea/' + usersArr[i]._id + '"><strong>email:</strong><span>'+ usersArr[i].title +'</span></a><br>' +
+                                '<strong>text:</strong><span>' + usersArr[i].text + '</span><br>' +
+                                '<strong>author:</strong><span>' + usersArr[i].author + '</span><br>' +
+                                '<img alt="picture" style="height:200px; width:300px" src="data:image/png;base64,'+ usersArr[i].picture + '">'+
+                                '<br><br><br><br><br><br>' +
+                                '</li>'
+                        );
+                    }
+                }
+            }
+        });
+    });
+</script>
+</html>

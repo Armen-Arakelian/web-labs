@@ -1,0 +1,55 @@
+<!-- views/login.ejs -->
+<!doctype html>
+<html>
+<head>
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <title>Log in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <style>
+        body {font-family: "Raleway", Arial, sans-serif}
+        .w3-row img{margin-bottom:-8px}
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="col-sm-6 col-sm-offset-3">
+        <br><br><br><br>
+        <h1>Login</h1>
+
+        <% if (message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+
+        <form action="/login" method="post">
+            <div class="w3-group">
+                <label>Email</label>
+                <input type="hidden" name="_csrf" value=<%=csrfToken%>>
+                <input id="us" type="text" class="w3-input w3-border" name="email">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input id="pass" type="password" class="w3-input w3-border" name="password">
+            </div>
+
+            <button id="enter" type="submit"class="w3-btn w3-btn-block w3-padding-12 w3-dark-grey">Login</button>
+        </form>
+
+
+        <hr>
+
+        <p>Need an account? <a href="/signup">Signup</a></p>
+        <p>Or go <a href="/">home</a>.</p>
+
+    </div>
+
+</div>
+</body>
+</html>

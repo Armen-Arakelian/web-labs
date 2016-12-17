@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <title>User's page</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <style>
+        body {font-family: "Raleway", Arial, sans-serif}
+        .w3-row img{margin-bottom:-8px}
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<a href="http://localhost:8080" class="w3-right w3-btn w3-red">Home</a>
+<div class="col-sm-6">
+
+    <div class="well">
+
+        <h3><%=user.local.email%></h3>
+
+        <p>
+            <%for (var i = ideas.length - 1; i >= 0; i--){%>
+        <p>title: <%=ideas[i].title%></p>
+        <p>text: <%=ideas[i].text%></p>
+        <p>author: <%=ideas[i].author%></p>
+        <p><a href='http://localhost:8080/idea/<%=ideas[i]._id%>'><img alt="picture" style="height:200px; width:300px" src='data:image/jpg;base64,<%= ideas[i].picture.data %>'/></a></p>
+        </p>
+        <%}%>
+    </div>
+</div>
+
+</div>
+
+</div>
+</body>
+</html>

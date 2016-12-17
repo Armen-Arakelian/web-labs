@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <title>Users</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <style>
+        body {font-family: "Raleway", Arial, sans-serif}
+        .w3-row img{margin-bottom:-8px}
+        h1{
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div class="container">
+
+    <div class="page-header text-center">
+        <a href="/" class="w3-left w3-btn w3-red">Home</a>
+        <h1>Users Page</h1>
+    </div>
+
+    <div class="row">
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6 col-sm-offset-3">
+            <br>
+            <br>
+            <br>
+
+            <div class="well">
+                <p class="w3-group">
+                    <%for (var i = users.length - 1; i >= 0; i--){%>
+                    <div class="item">
+                    <strong>id</strong>: <%= users[i]._id %><br>
+                    <a href='/users/<%=users[i]._id%>'> <strong>email</strong>: <%= users[i].local.email %></a><br>
+                    <strong>role</strong>: <%= users[i].local.role %><br>
+                    <br><br><br><br><br><br>
+                    </div>
+                    <%}%>
+
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <title>Delete user</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <style>
+        body {font-family: "Raleway", Arial, sans-serif}
+        .w3-row img{margin-bottom:-8px}
+    </style>
+</head>
+<body>
+<div class="container">
+
+<div class="jumbotron text-center">
+
+    <form method="post">
+        <div class="w3-group">
+            <label>Email</label>
+            <input type="hidden" name="_csrf" value=<%=csrfToken%>>
+            <input type="text" class="w3-input w3-border" name="email">
+        </div>
+        <button type="submit"class="w3-btn w3-btn-block w3-padding-12 w3-dark-grey">Delete</button>
+    </form>
+</div>
+
+</div>
+</body>
+</html>

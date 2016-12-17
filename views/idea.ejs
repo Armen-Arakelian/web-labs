@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <title>Ideas</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <style>
+        .comment{
+            background-color: darkgrey;
+        }
+        body {font-family: "Raleway", Arial, sans-serif}
+        .w3-row img{margin-bottom:-8px}
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<a href="/" class="w3-right w3-btn w3-red">Home</a>
+<div class="col-sm-6">
+
+    <div class="well">
+
+        <h3><%=idea.title%></h3>
+
+        <p>
+        <p>title: <%=idea.title%></p>
+        <p>text: <%=idea.text%></p>
+        <p><img alt="picture" style="height:200px; width:300px" src='data:image/jpg;base64,<%= idea.picture%>'/></p>
+        <p>comments:</p>
+        <%for (var i = 0; i <= comments.length - 1; i++){%>
+        <br>
+        <p class="comment">Commented by: <%=comments[i].author%></p>
+        <p><%=comments[i].text%></p>
+        <br>
+        <%}%>
+        </p>
+        <form action="/idea/ <%=idea._id%>" method="post">
+            <div class="form-group">
+                <label>Your comment</label>
+                <input type="hidden" name="_csrf" value=<%=csrfToken%>>
+                <input type="text" class="w3-input w3-border" name="comment">
+            </div>
+
+            <button type="submit"class="w3-btn w3-btn-block w3-padding-12 w3-dark-grey">Comment</button>
+        </form>
+    </div>
+</div>
+
+</div>
+
+</div>
+</body>
+</html>
