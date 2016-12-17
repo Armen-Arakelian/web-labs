@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-<a href="http://localhost:8080" class="w3-right w3-btn w3-red">Home</a>
+<a href="/" class="w3-right w3-btn w3-red">Home</a>
 <div class="col-sm-6">
 
     <div class="well">
@@ -30,7 +30,7 @@
         <p>title: <%=ideas[i].title%></p>
         <p>text: <%=ideas[i].text%></p>
         <p>author: <%=ideas[i].author%></p>
-        <p><a href='http://localhost:8080/idea/<%=ideas[i]._id%>'><img alt="picture" style="height:200px; width:300px" src='data:image/jpg;base64,<%= ideas[i].picture.data %>'/></a></p>
+        <p><a href='/idea/<%=ideas[i]._id%>'><img alt="picture" style="height:200px; width:300px" src='data:image/jpg;base64,<%= ideas[i].picture.data %>'/></a></p>
         </p>
         <%}%>
     </div>

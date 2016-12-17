@@ -95,14 +95,6 @@ module.exports = function(app) {
             });
         });
 
-    router.get('/allUsers/:email',  function(req, res){
-            User.findOne({'local.email': req.params.email}, function (err, user) {
-                console.log(req.params.email)
-                if (err)
-                    res.send(err);
-                res.json(user);
-            });
-        })
 
     app.use('/api', router);
 }
