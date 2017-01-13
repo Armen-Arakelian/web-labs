@@ -1,104 +1,64 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Ideas</title>
+    <title>Persons</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
     <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
     <style>
-        body {font-family: "Raleway", Arial, sans-serif}
-        .w3-row img{margin-bottom:-8px}
-        h1{
-            text-align: center;
-        }
+        body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
+        .w3-sidenav a {padding:20px}
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 </head>
+
 <body>
-<a href="/" class="w3-right w3-btn w3-red">Home</a>
-<div>
-    <form id="sortf">
-        <p> <input type="text" class="form-control" name="fuser" placeholder="Email"></p>
-        <h4 id="sortedusersbutt" class="btn">Show</h4>
-    </form>
-</div>
-<div class="col-sm-6">
+<a href="/" class="w3-left w3-btn w3-red">Home</a>
+<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
 
-<div class="well">
+    <!-- First Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+        <%for (var i = page*3; i <= page*3+2; i++){%>
+        <div class="w3-quarter">
+            <%if(persons[i] != null){%>
+            <p><a href='/person/<%=persons[i]._id%>'><img alt="picture"  src='data:image/jpg;base64,<%= persons[i].picture %>'/></a></p>
+            <p>name: <%=persons[i].name%></p>
+            <p>about: <%=persons[i].about%></p>
+            <p>iq: <%=persons[i].iq%></p>
+            <p>birth date: <%=persons[i].birthDate%></p>
+            <%}%>
+        </div>
+        <%}%>
+    </div>
 
-<h3>All ideas</h3>
-
-<p>
-<ol id = "list">
-    <%for (var i = ideas.length - 1; i >= 0; i--){%>
-    <li class="item">
-        <p>title: <%=ideas[i].title%></p>
-        <p>text: <%=ideas[i].text%></p>
-        <p>author: <%=ideas[i].author%></p>
-        <p><a href='/idea/<%=ideas[i]._id%>'><img alt="picture" style="height:200px; width:300px" src='data:image/jpg;base64,<%= ideas[i].picture %>'/></a></p>
-    </li>
+    <!-- Second Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center">
+        <%for (var i = (page)*3 + 3; i <= (page)*3+5; i++){%>
+        <div class="w3-quarter">
+            <%if(persons[i] != null){%>
+            <p><a href='/person/<%=persons[i]._id%>'><img alt="picture"  src='data:image/jpg;base64,<%= persons[i].picture %>'/></a></p>
+            <p>name: <%=persons[i].name%></p>
+            <p>about: <%=persons[i].about%></p>
+            <p>iq: <%=persons[i].iq%></p>
+            <p>birth date: <%=persons[i].birthDate%></p>
+            <%}%>
+        </div>
+        <%}%>
+    </div>
+    <%if(page <= persons.length/4-1){%>
+    <a href = "/persons/<%=(Number(page) + 2)%>" class="w3-btn w3-right w3-padding-12 w3-dark-grey">Next page</a>
     <%}%>
-</ol>
-</p>
-</div>
-</div>
-
-</div>
-
+    <%if (page > 0){%>
+    <a href = "/persons/<%=(Number(page))%>" class="w3-btn  w3-left w3-padding-12 w3-dark-grey">Previous page</a>
+    <%}%>
 </div>
 </body>
-<script>
-    $(document).ready(function(){
-        $( "#sortedusersbutt" ).click(function() {
-
-            var params = $('#sortf').serialize();
-            console.log(params);
-            var xhr;
-            if(params != 'fuser='){
-                xhr = new XMLHttpRequest();
-                xhr.open("GET", '/getsortedusers?' + params, true);
-            }
-            else{
-                xhr = new XMLHttpRequest();
-                xhr.open("GET", '/getallusers', true);
-            }
-            xhr.send();
-            xhr.onreadystatechange = function() {
-
-                if (xhr.readyState != 4) return;
-
-                if (xhr.status != 200) {
-                    console.log("ERROR: " + xhr.status + ': ' + xhr.statusText);
-                } else if(xhr.responseText.length > 0 && xhr.readyState === XMLHttpRequest.DONE) {
-                    console.log("SUCCESS");
-                    var data = xhr.responseText;
-                    var usersArr = JSON.parse(data);
-
-                    $('#list .item').remove();
-
-                    //var i = 0;
-
-                    console.log(usersArr);
-
-                    for (var i in usersArr){
-
-                        $('#list').append(
-                                '<li class="item">' +
-                                '<a href="/idea/' + usersArr[i]._id + '"><strong>email:</strong><span>'+ usersArr[i].title +'</span></a><br>' +
-                                '<strong>text:</strong><span>' + usersArr[i].text + '</span><br>' +
-                                '<strong>author:</strong><span>' + usersArr[i].author + '</span><br>' +
-                                '<img alt="picture" style="height:200px; width:300px" src="data:image/png;base64,'+ usersArr[i].picture + '">'+
-                                '<br><br><br><br><br><br>' +
-                                '</li>'
-                        );
-                    }
-                }
-            }
-        });
-    });
-</script>
 </html>

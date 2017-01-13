@@ -26,13 +26,21 @@
 
         <form method="post" enctype="multipart/form-data">
             <div class="w3-group">
-                <label>Title</label>
+                <label>Name</label>
                 <input type="hidden" name="_csrf" value=<%=csrfToken%>>
-                <input type="text" class="w3-input w3-border" name="title">
+                <input type="text" class="w3-input w3-border" name="name">
             </div>
             <div class="form-group">
-                <label>Text</label>
-                <input type="text" class="w3-input w3-border" name="text">
+                <label>About</label>
+                <input type="text" class="w3-input w3-border" name="about">
+            </div>
+            <div class="form-group">
+                <label>Iq</label>
+                <input type="number" class="w3-input w3-border" name="iq">
+            </div>
+            <div class="form-group">
+                <label>BirthDate</label>
+                <input type="text" class="w3-input w3-border" name="birthDate">
             </div>
             <p><label>Add image</label></p>
             <input type ="file" name ="picture"/><br>

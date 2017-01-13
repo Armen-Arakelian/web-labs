@@ -2,13 +2,12 @@
 var mongoose = require('mongoose');
 
 var ideaSchema = mongoose.Schema({
-        title   : String,
-        text    : String,
-        author  : String,
-        authorId: String,
-
+        name   : String,
+        birthDate    : String,
+        about  : String,
+        iq: Number,
         picture : String,
 
 });
 
-module.exports = mongoose.model('Idea', ideaSchema);
+module.exports = mongoose.model('Person', ideaSchema);

@@ -2,13 +2,20 @@
 <html>
 <head>
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
-    <title>Ideas</title>
+    <title>Person <%=person.name%></title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
     <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type = "text/css" href = "../stylesheets/style.css">
+    <link rel="stylesheet" type = "text/css" href = "../stylesheets/normalize.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <style>
         .comment{
             background-color: darkgrey;
@@ -26,29 +33,36 @@
 
     <div class="well">
 
-        <h3><%=idea.title%></h3>
+        <h3><%=person.name%></h3>
 
         <p>
-        <p>title: <%=idea.title%></p>
-        <p>text: <%=idea.text%></p>
-        <p><img alt="picture" style="height:200px; width:300px" src='data:image/jpg;base64,<%= idea.picture%>'/></p>
-        <p>comments:</p>
-        <%for (var i = 0; i <= comments.length - 1; i++){%>
-        <br>
-        <p class="comment">Commented by: <%=comments[i].author%></p>
-        <p><%=comments[i].text%></p>
-        <br>
-        <%}%>
-        </p>
-        <form action="/idea/ <%=idea._id%>" method="post">
-            <div class="form-group">
-                <label>Your comment</label>
-                <input type="hidden" name="_csrf" value=<%=csrfToken%>>
-                <input type="text" class="w3-input w3-border" name="comment">
+        <p>about: <%=person.about%></p>
+        <p>iq: <%=person.iq%></p>
+        <p>birth date: <%=person.birthDate%></p>
+        <p><img alt="picture" style="height:200px; width:300px" src='data:image/jpg;base64,<%= person.picture%>'/></p>
+        <%if(user){%>
+        <%if(user.local.role === "admin"){%>
+        <button id="delete-form" class="w3-btn w3-btn-block w3-padding-12 w3-dark-grey" type="button" data-toggle="modal" data-target="#myModal">Delete</button>
+        <div id="myModal" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header alert-danger"><button class="close" type="button" data-dismiss="modal">×</button>
+                        <h3 class="modal-title">Confirmation</h3>
+                    </div>
+                    <div class="modal-body ">You really want to delete this person?</div>
+                    <div class="modal-footer modal-delete">
+                        <form action="/person/<%=person._id%>" method="post">
+                            <input type="hidden" name="_csrf" value=<%=csrfToken%>>
+                            <li><button class="w3-btn  w3-padding-12 w3-green" type="submit">Yes</button></li>
+                            <br>
+                            <li><button class="w3-btn w3-padding-12 w3-red" type="button" data-dismiss="modal">No </button></li>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <button type="submit"class="w3-btn w3-btn-block w3-padding-12 w3-dark-grey">Comment</button>
-        </form>
+        </div>
+        <%}%>
+        <%}%>
     </div>
 </div>
 

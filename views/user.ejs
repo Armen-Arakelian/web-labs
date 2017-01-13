@@ -25,14 +25,6 @@
 
         <h3><%=user.local.email%></h3>
 
-        <p>
-            <%for (var i = ideas.length - 1; i >= 0; i--){%>
-        <p>title: <%=ideas[i].title%></p>
-        <p>text: <%=ideas[i].text%></p>
-        <p>author: <%=ideas[i].author%></p>
-        <p><a href='/idea/<%=ideas[i]._id%>'><img alt="picture" style="height:200px; width:300px" src='data:image/jpg;base64,<%= ideas[i].picture %>'/></a></p>
-        </p>
-        <%}%>
     </div>
 </div>
 

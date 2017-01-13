@@ -1,6 +1,4 @@
-/**
- * Created by ASA on 18.11.2016.
- */
+
 
 var LocalStrategy   = require('passport-local').Strategy;
 

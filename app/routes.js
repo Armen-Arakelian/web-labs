@@ -1,4 +1,4 @@
-var Idea = require('../app/models/idea');
+var Person = require('../app/models/idea');
 var User = require('../app/models/user');
 var Comment = require('../app/models/comment');
 module.exports = function(app, passport) {
@@ -22,7 +22,7 @@ module.exports = function(app, passport) {
         res.render("deleteIdea");
     });
 
-    app.get('/createIdea', isLoggedIn, function(req, res) {
+    app.get('/createPerson', function(req, res) {
         res.render("createIdea", {
             csrfToken: req.csrfToken()
         });
@@ -32,21 +32,21 @@ module.exports = function(app, passport) {
         res.render("notLoggedIn");
     });
 
-    app.post('/createIdea', function(req, res) {
+    app.post('/createPerson', function(req, res) {
         var image = req.files.picture;
         var picture64string = image.data.toString('base64');
-        var idea = new Idea({
-            title: req.body.title,
-            text: req.body.text,
-            author: req.user.local.email,
-            authorId: req.user._id,
+        var idea = new Person({
+            name: req.body.name,
+            about: req.body.about,
+            iq: req.body.iq,
+            birthDate: req.body.birthDate,
             picture : picture64string
 
         });
-        idea.picture = picture64string;
+        Person.picture = picture64string;
         idea.save(function (err) {
             if (!err) {
-                res.redirect("/idea/" + idea._id);
+                res.redirect("/person/" + idea._id);
                 return
             } else {
                 console.log(err);
@@ -99,17 +99,18 @@ module.exports = function(app, passport) {
         failureFlash : true
     }));
 
-    app.get('/ideas', function(req, res) {
-        Idea.find({}, function(err, ideas){
+    app.get('/persons/:page', function(req, res) {
+        Person.find({}, function(err, ideas){
             res.render('ideas', {
-                ideas : ideas
+                page: Number(req.params.page - 1),
+                persons : ideas
             })
         })
     });
 
     // ajax
     app.get('/getallusers', function(req, res){
-        Idea.find(function(err, usrs){
+        Person.find(function(err, usrs){
             let results = usrs.map(usr => {
                 usr.picture = usr.picture.toString('base64');
                 return usr;
@@ -120,16 +121,16 @@ module.exports = function(app, passport) {
     })
 
     app.get('/getsortedusers', function(req, res){
-        Idea.find({title: req.query.fuser}, function (err, usrs){
+        Person.find({name: req.query.fuser}, function (err, usrs){
 
             let results = usrs.map(function(usr) {
                 let newUser = {
                     _id: usr.id,
-                    author: usr.author,
-                    authorId: usr.authorId,
+                    name: usr.name,
+                    about: usr.about,
                     picture: usr.picture.toString('base64'),
-                    text: usr.text,
-                    title: usr.title
+                    iq: usr.iq,
+                    birthDate: usr.birthDate
                 };
                 return newUser;
             });
@@ -137,16 +138,12 @@ module.exports = function(app, passport) {
             res.send(JSON.stringify(results ));
         })
     })
-
     //
 
     app.get('/profile', isLoggedIn, function(req, res) {
         User.findOne({_id: req.user._id}, function (err, docs) {
-            Idea.find({authorId: req.user._id}, function (err, ids) {
-                res.render('user', {
-                    ideas:ids,
-                    user: docs
-                })
+            res.render('profile', {
+                user: docs
             })
         })
     })
@@ -174,8 +171,8 @@ module.exports = function(app, passport) {
     })
 
     app.post('/deleteIdea', isLoggedIn, isAdmin, function (req, res) {
-        if(Idea.find({'title': req.body.title})) {
-            Idea.remove({'title': req.body.title}, function (err) {
+        if(Person.find({'title': req.body.title})) {
+            Person.remove({'title': req.body.title}, function (err) {
                 if (!err) {
                     console.log("deleted");
                     res.redirect("/");
@@ -190,39 +187,24 @@ module.exports = function(app, passport) {
         }
     })
 
-    app.post("/idea/:id", isLoggedIn, function (req, res) {
-        var comment = new Comment({
-            text: req.body.comment,
-            ideaId: req.params.id.replace(" ", ""),
-            author: req.user.local.email
-        });
-        comment.save(function (err) {
-            if (!err) {
-                res.redirect("back");
-                return
-            } else {
-                console.log(err);
-                if(err.name == 'ValidationError') {
-                    res.statusCode = 400;
-                    res.send({ error: 'Validation error' });
-                } else {
-                    res.statusCode = 500;
-                    res.send({ error: 'Server error' });
-                }
-            }
-        });
+    app.get('/person/:id',  function(req, res) {
+
+        Person.findOne({_id: req.params.id}, function (err, docs) {
+                res.render('idea', {
+                    user:req.user,
+                    person: docs,
+                    csrfToken: req.csrfToken()
+            })
+        })
     })
 
-    app.get('/idea/:id',  function(req, res) {
+    app.post('/person/:id',  function(req, res) {
 
-        Idea.findOne({_id: req.params.id}, function (err, docs) {
-            Comment.find({ideaId: req.params.id}, function (err, comm) {
-                res.render('idea', {
-                    comments:comm,
-                    idea: docs,
-                    csrfToken: req.csrfToken()
-                })
-            })
+        Person.remove({_id: req.params.id}, function (err) {
+            if(!err)
+                res.redirect("/persons/1")
+            else
+                res.send(err);
         })
     })
 
@@ -232,12 +214,9 @@ module.exports = function(app, passport) {
             return
         }
         User.findOne({_id: req.params.id}, function (err, docs) {
-            Idea.find({authorId: req.params.id}, function (err, ids) {
                 res.render('user', {
-                    ideas:ids,
                     user: docs,
                     csrfToken: req.csrfToken()
-                })
             })
         })
     })
